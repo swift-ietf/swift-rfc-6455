@@ -20,31 +20,25 @@ let package = Package(
         .iOS(.v26),
         .tvOS(.v26),
         .watchOS(.v26),
-        .visionOS(.v26),
+        .visionOS(.v26)
     ],
     products: [
-        .library(name: .rfc6455, targets: [.rfc6455])
+        .library(name: "RFC 6455", targets: ["RFC 6455"])
     ],
     dependencies: [
         .package(path: "../swift-rfc-3986"),
         .package(path: "../../swift-primitives/swift-standard-library-extensions"),
-        .package(path: "../../swift-foundations/swift-ascii"),
+        .package(path: "../../swift-foundations/swift-ascii")
     ],
     targets: [
         .target(
-            name: .rfc6455,
+            name: "RFC 6455",
             dependencies: [
                 .rfc3986,
                 .standards,
-                .incits41986,
+                .incits41986
             ]
-        ),
-        .testTarget(
-            name: .rfc6455.tests,
-            dependencies: [
-                .rfc6455
-            ]
-        ),
+        )
     ],
     swiftLanguageModes: [.v6]
 )
@@ -59,6 +53,6 @@ for target in package.targets where ![.system, .binary, .plugin].contains(target
         existing + [
             .enableUpcomingFeature("ExistentialAny"),
             .enableUpcomingFeature("InternalImportsByDefault"),
-            .enableUpcomingFeature("MemberImportVisibility"),
+            .enableUpcomingFeature("MemberImportVisibility")
         ]
 }
