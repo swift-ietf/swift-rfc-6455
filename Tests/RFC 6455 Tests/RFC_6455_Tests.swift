@@ -120,6 +120,8 @@ struct RFC6455Tests {
         @Test
         func `Masking is reversible`() {
             let key = RFC_6455.MaskingKey(0x12, 0x34, 0x56, 0x78)
+            // MaskingKey.apply takes inout [UInt8] in separate file scope;
+            // test stays UInt8 at the apply call.
             let original: [UInt8] = [0x48, 0x65, 0x6C, 0x6C, 0x6F] // "Hello"
 
             var data = original
@@ -193,7 +195,7 @@ struct RFC6455Tests {
         func `Serialize unmasked frame`() throws {
             let frame = try RFC_6455.Frame.text("Hi")
 
-            var buffer: [UInt8] = []
+            var buffer: [Byte] = []
             RFC_6455.Frame.serialize(frame, into: &buffer)
 
             // FIN + text opcode, no mask + length 2, "Hi"
@@ -209,7 +211,7 @@ struct RFC6455Tests {
             let mask = RFC_6455.MaskingKey(0x37, 0xfa, 0x21, 0x3d)
             let frame = try RFC_6455.Frame.text("Hi", mask: mask)
 
-            var buffer: [UInt8] = []
+            var buffer: [Byte] = []
             RFC_6455.Frame.serialize(frame, into: &buffer)
 
             // FIN + text, mask + length, 4 mask bytes, 2 masked bytes
