@@ -184,7 +184,7 @@ struct RFC6455Tests {
 
         @Test
         func `Control frame payload limit`() {
-            let largePayload = Array(repeating: UInt8(0), count: 126)
+            let largePayload: [Byte] = Array(repeating: 0, count: 126)
 
             #expect(throws: RFC_6455.Frame.Error.self) {
                 try RFC_6455.Frame(opcode: .ping, payload: largePayload)

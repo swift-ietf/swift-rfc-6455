@@ -101,22 +101,8 @@ extension RFC_6455 {
             self.payload = payload
         }
 
-        /// Stdlib-interop forwarder: construction from `[UInt8]` payload.
-        @_disfavoredOverload
-        public init(
-            fin: Bool = true,
-            rsv1: Bool = false,
-            rsv2: Bool = false,
-            rsv3: Bool = false,
-            opcode: Opcode,
-            mask: MaskingKey? = nil,
-            payload: [UInt8]
-        ) throws(Error) {
-            try self.init(
-                fin: fin, rsv1: rsv1, rsv2: rsv2, rsv3: rsv3,
-                opcode: opcode, mask: mask, payload: [Byte](payload)
-            )
-        }
+        // Stdlib-interop UInt8 forwarder init lives in `RFC 6455 Standard
+        // Library Integration` per [API-BYTE-007].
 
         /// Creates a frame WITHOUT validation
         init(
@@ -219,11 +205,8 @@ extension RFC_6455.Frame {
         try Self(opcode: .binary, mask: mask, payload: data)
     }
 
-    /// Stdlib-interop forwarder: binary frame from `[UInt8]` data.
-    @_disfavoredOverload
-    public static func binary(_ data: [UInt8], mask: RFC_6455.MaskingKey? = nil) throws(Error) -> Self {
-        try Self(opcode: .binary, mask: mask, payload: [Byte](data))
-    }
+    // Stdlib-interop UInt8 forwarder `binary(_:mask:)` lives in `RFC 6455
+    // Standard Library Integration` per [API-BYTE-007].
 
     /// Creates a ping frame
     ///
