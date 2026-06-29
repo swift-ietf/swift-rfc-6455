@@ -12,6 +12,7 @@ extension Target.Dependency {
     static var standards: Self { .product(name: "Standard Library Extensions", package: "swift-standard-library-extensions") }
     static var incits41986: Self { .product(name: "ASCII Primitives", package: "swift-ascii-primitives") }
     static var bytePrimitivesSLI: Self { .product(name: "Byte Primitives Standard Library Integration", package: "swift-byte-primitives") }
+    static var radixFormat: Self { .product(name: "Radix Format Primitives", package: "swift-radix-formatter-primitives") }
 }
 
 let package = Package(
@@ -31,7 +32,8 @@ let package = Package(
         .package(url: "https://github.com/swift-ietf/swift-rfc-3986.git", branch: "main"),
         .package(url: "https://github.com/swift-primitives/swift-standard-library-extensions.git", branch: "main"),
         .package(url: "https://github.com/swift-primitives/swift-ascii-primitives.git", branch: "main"),
-        .package(url: "https://github.com/swift-primitives/swift-byte-primitives.git", branch: "main")
+        .package(url: "https://github.com/swift-primitives/swift-byte-primitives.git", branch: "main"),
+        .package(url: "https://github.com/swift-primitives/swift-radix-formatter-primitives.git", branch: "main")
     ],
     targets: [
         .target(
@@ -39,7 +41,8 @@ let package = Package(
             dependencies: [
                 .rfc3986,
                 .standards,
-                .incits41986
+                .incits41986,
+                .radixFormat
             ]
         ),
         .target(
