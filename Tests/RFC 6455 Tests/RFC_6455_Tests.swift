@@ -11,6 +11,7 @@
 // ===----------------------------------------------------------------------===//
 
 import Testing
+
 @testable import RFC_6455
 
 @Suite("RFC 6455 WebSocket Tests")
@@ -100,7 +101,7 @@ struct RFC6455Tests {
 
         @Test
         func `Create from value`() {
-            let key = RFC_6455.MaskingKey(value: 0x12345678)
+            let key = RFC_6455.MaskingKey(value: 0x1234_5678)
             #expect(key.bytes.0 == 0x12)
             #expect(key.bytes.1 == 0x34)
             #expect(key.bytes.2 == 0x56)
@@ -114,7 +115,7 @@ struct RFC6455Tests {
             #expect(key[1] == 0xBB)
             #expect(key[2] == 0xCC)
             #expect(key[3] == 0xDD)
-            #expect(key[4] == 0xAA) // Wraps around
+            #expect(key[4] == 0xAA)  // Wraps around
         }
 
         @Test
@@ -122,7 +123,7 @@ struct RFC6455Tests {
             let key = RFC_6455.MaskingKey(0x12, 0x34, 0x56, 0x78)
             // MaskingKey.apply takes inout [UInt8] in separate file scope;
             // test stays UInt8 at the apply call.
-            let original: [UInt8] = [0x48, 0x65, 0x6C, 0x6C, 0x6F] // "Hello"
+            let original: [UInt8] = [0x48, 0x65, 0x6C, 0x6C, 0x6F]  // "Hello"
 
             var data = original
             key.apply(to: &data)
@@ -167,8 +168,8 @@ struct RFC6455Tests {
             #expect(frame.opcode == .close)
             // Payload: 2 bytes code + "bye"
             #expect(frame.payload.count == 5)
-            #expect(frame.payload[0] == 0x03) // 1000 >> 8
-            #expect(frame.payload[1] == 0xE8) // 1000 & 0xFF
+            #expect(frame.payload[0] == 0x03)  // 1000 >> 8
+            #expect(frame.payload[1] == 0xE8)  // 1000 & 0xFF
         }
 
         @Test
@@ -200,10 +201,10 @@ struct RFC6455Tests {
 
             // FIN + text opcode, no mask + length 2, "Hi"
             #expect(buffer.count == 4)
-            #expect(buffer[0] == 0x81) // FIN + text
-            #expect(buffer[1] == 0x02) // no mask + length 2
-            #expect(buffer[2] == 0x48) // 'H'
-            #expect(buffer[3] == 0x69) // 'i'
+            #expect(buffer[0] == 0x81)  // FIN + text
+            #expect(buffer[1] == 0x02)  // no mask + length 2
+            #expect(buffer[2] == 0x48)  // 'H'
+            #expect(buffer[3] == 0x69)  // 'i'
         }
 
         @Test
@@ -216,8 +217,8 @@ struct RFC6455Tests {
 
             // FIN + text, mask + length, 4 mask bytes, 2 masked bytes
             #expect(buffer.count == 8)
-            #expect(buffer[0] == 0x81) // FIN + text
-            #expect(buffer[1] == 0x82) // mask bit + length 2
+            #expect(buffer[0] == 0x81)  // FIN + text
+            #expect(buffer[1] == 0x82)  // mask bit + length 2
             // Mask bytes
             #expect(buffer[2] == 0x37)
             #expect(buffer[3] == 0xfa)

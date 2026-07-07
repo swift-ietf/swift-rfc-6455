@@ -13,6 +13,6 @@
 // exports.swift
 // swift-rfc-6455
 
+@_exported public import ASCII_Primitives
 @_exported public import RFC_3986
 @_exported public import Standard_Library_Extensions
-@_exported public import ASCII_Primitives

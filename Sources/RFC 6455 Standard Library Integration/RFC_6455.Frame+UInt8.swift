@@ -17,8 +17,8 @@
 // carrying `[UInt8]` payloads (e.g. from network buffers, file-read frames)
 // via `[Byte](data)`. Per [API-BYTE-007] (byte-discipline skill).
 
-public import RFC_6455
 internal import Byte_Primitives
+public import RFC_6455
 
 extension RFC_6455.Frame {
     /// Stdlib-interop forwarder: construction from `[UInt8]` payload.
@@ -33,8 +33,13 @@ extension RFC_6455.Frame {
         payload: [UInt8]
     ) throws(RFC_6455.Frame.Error) {
         try self.init(
-            fin: fin, rsv1: rsv1, rsv2: rsv2, rsv3: rsv3,
-            opcode: opcode, mask: mask, payload: [Byte](payload)
+            fin: fin,
+            rsv1: rsv1,
+            rsv2: rsv2,
+            rsv3: rsv3,
+            opcode: opcode,
+            mask: mask,
+            payload: [Byte](payload)
         )
     }
 

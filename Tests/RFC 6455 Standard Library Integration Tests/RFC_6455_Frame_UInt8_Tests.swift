@@ -10,15 +10,15 @@
 //
 // ===----------------------------------------------------------------------===//
 
-import Testing
 import RFC_6455
 import RFC_6455_Standard_Library_Integration
+import Testing
 
 @Suite("RFC 6455 Frame UInt8 forwarder")
 struct RFC_6455_Frame_UInt8_Tests {
     @Test
     func `init forwarder accepts [UInt8] payload`() throws {
-        let uint8Payload: [UInt8] = [0x48, 0x65, 0x6C, 0x6C, 0x6F] // "Hello"
+        let uint8Payload: [UInt8] = [0x48, 0x65, 0x6C, 0x6C, 0x6F]  // "Hello"
         let frame = try RFC_6455.Frame(opcode: .binary, payload: uint8Payload)
         #expect(frame.opcode == .binary)
         #expect(frame.payload.count == 5)

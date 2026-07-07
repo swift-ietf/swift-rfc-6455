@@ -103,10 +103,7 @@ extension RFC_6455 {
 
 extension RFC_6455.MaskingKey: Equatable {
     public static func == (lhs: Self, rhs: Self) -> Bool {
-        lhs.bytes.0 == rhs.bytes.0 &&
-        lhs.bytes.1 == rhs.bytes.1 &&
-        lhs.bytes.2 == rhs.bytes.2 &&
-        lhs.bytes.3 == rhs.bytes.3
+        lhs.bytes.0 == rhs.bytes.0 && lhs.bytes.1 == rhs.bytes.1 && lhs.bytes.2 == rhs.bytes.2 && lhs.bytes.3 == rhs.bytes.3
     }
 }
 
@@ -132,8 +129,7 @@ extension RFC_6455.MaskingKey: Codable {
 
     public func encode(to encoder: any Encoder) throws {
         var container = encoder.singleValueContainer()
-        let value = (UInt32(bytes.0) << 24) | (UInt32(bytes.1) << 16) |
-                    (UInt32(bytes.2) << 8) | UInt32(bytes.3)
+        let value = (UInt32(bytes.0) << 24) | (UInt32(bytes.1) << 16) | (UInt32(bytes.2) << 8) | UInt32(bytes.3)
         try container.encode(value)
     }
 }
@@ -142,9 +138,7 @@ extension RFC_6455.MaskingKey: Codable {
 
 extension RFC_6455.MaskingKey: CustomStringConvertible {
     public var description: String {
-        bytes.0.formatted(Radix.Format.hex.zeroPadded(width: 2)) +
-        bytes.1.formatted(Radix.Format.hex.zeroPadded(width: 2)) +
-        bytes.2.formatted(Radix.Format.hex.zeroPadded(width: 2)) +
-        bytes.3.formatted(Radix.Format.hex.zeroPadded(width: 2))
+        bytes.0.formatted(Radix.Format.hex.zeroPadded(width: 2)) + bytes.1.formatted(Radix.Format.hex.zeroPadded(width: 2)) + bytes.2.formatted(Radix.Format.hex.zeroPadded(width: 2))
+            + bytes.3.formatted(Radix.Format.hex.zeroPadded(width: 2))
     }
 }
