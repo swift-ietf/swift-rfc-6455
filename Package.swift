@@ -12,7 +12,7 @@ extension Target.Dependency {
     static var standards: Self { .product(name: "Standard Library Extensions", package: "swift-standard-library-extensions") }
     static var incits41986: Self { .product(name: "ASCII Primitives", package: "swift-ascii-primitives") }
     static var bytePrimitivesSLI: Self { .product(name: "Byte Primitives Standard Library Integration", package: "swift-byte-primitives") }
-    static var radixFormat: Self { .product(name: "Radix Format Primitives", package: "swift-radix-formatter-primitives") }
+    static var radixFormat: Self { .product(name: "Radix Formatter Primitives", package: "swift-radix-formatter-primitives") }
 }
 
 let package = Package(

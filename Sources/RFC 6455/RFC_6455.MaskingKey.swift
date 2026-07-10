@@ -15,7 +15,7 @@
 //
 // RFC 6455 Section 5.3: Client-to-Server Masking
 
-import Radix_Format_Primitives
+import Radix_Formatter_Primitives
 
 extension RFC_6455 {
     /// 32-bit Masking Key
@@ -138,7 +138,7 @@ extension RFC_6455.MaskingKey: Codable {
 
 extension RFC_6455.MaskingKey: CustomStringConvertible {
     public var description: String {
-        bytes.0.formatted(Radix.Format.hex.zeroPadded(width: 2)) + bytes.1.formatted(Radix.Format.hex.zeroPadded(width: 2)) + bytes.2.formatted(Radix.Format.hex.zeroPadded(width: 2))
-            + bytes.3.formatted(Radix.Format.hex.zeroPadded(width: 2))
+        bytes.0.formatted(Radix.Formatter.hex.zeroPadded(width: 2)) + bytes.1.formatted(Radix.Formatter.hex.zeroPadded(width: 2)) + bytes.2.formatted(Radix.Formatter.hex.zeroPadded(width: 2))
+            + bytes.3.formatted(Radix.Formatter.hex.zeroPadded(width: 2))
     }
 }
