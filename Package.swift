@@ -10,9 +10,9 @@ extension Target.Dependency {
     static var rfc6455: Self { .target(name: .rfc6455) }
     static var rfc3986: Self { .product(name: "RFC 3986", package: "swift-rfc-3986") }
     static var standards: Self { .product(name: "Standard Library Extensions", package: "swift-standard-library-extensions") }
-    static var incits41986: Self { .product(name: "ASCII Primitives", package: "swift-ascii-primitives") }
-    static var bytePrimitivesSLI: Self { .product(name: "Byte Primitives Standard Library Integration", package: "swift-byte-primitives") }
-    static var radixFormat: Self { .product(name: "Radix Formatter Primitives", package: "swift-radix-formatter-primitives") }
+    static var incits41986: Self { .product(name: "ASCII", package: "swift-ascii") }
+    static var bytePrimitivesSLI: Self { .product(name: "Byte", package: "swift-byte") }
+    static var radixFormat: Self { .product(name: "Formatter", package: "swift-formatter") }
 }
 
 let package = Package(
@@ -30,10 +30,10 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/swift-ietf/swift-rfc-3986.git", branch: "main"),
-        .package(url: "https://github.com/swift-primitives/swift-standard-library-extensions.git", branch: "main"),
-        .package(url: "https://github.com/swift-primitives/swift-ascii-primitives.git", branch: "main"),
-        .package(url: "https://github.com/swift-primitives/swift-byte-primitives.git", branch: "main"),
-        .package(url: "https://github.com/swift-primitives/swift-radix-formatter-primitives.git", branch: "main")
+        .package(url: "https://github.com/swift-atoms/swift-standard-library-extensions.git", branch: "main"),
+        .package(url: "https://github.com/swift-atoms/swift-ascii.git", branch: "main"),
+        .package(url: "https://github.com/swift-atoms/swift-byte.git", branch: "main"),
+        .package(url: "https://github.com/swift-atoms/swift-formatter.git", branch: "main")
     ],
     targets: [
         .target(
