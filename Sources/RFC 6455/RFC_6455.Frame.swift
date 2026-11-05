@@ -15,6 +15,9 @@
 //
 // RFC 6455 Section 5.2: Base Framing Protocol
 
+public import Binary
+public import Byte
+
 extension RFC_6455 {
     /// WebSocket Frame
     ///
@@ -172,10 +175,9 @@ extension RFC_6455.Frame: Binary.Serializable {
             buffer.append(Byte(mask.bytes.3))
 
             // Masked payload. mask.applying takes [UInt8] in separate
-            // MaskingKey file scope; bridge via .underlying for input,
-            // [Byte]() bridge for the appended result.
-            let maskedUInt8 = mask.applying(to: frame.payload.underlying)
-            buffer.append(contentsOf: [Byte](maskedUInt8))
+            // MaskingKey file scope; bridge by bit pattern both ways.
+            let maskedUInt8 = mask.applying(to: frame.payload.map(\.bitPattern))
+            buffer.append(contentsOf: maskedUInt8.lazy.map(Byte.init(bitPattern:)))
         } else {
             buffer.append(contentsOf: frame.payload)
         }
@@ -192,7 +194,7 @@ extension RFC_6455.Frame {
     ///   - mask: Optional masking key
     /// - Returns: A text frame
     public static func text(_ text: String, mask: RFC_6455.MaskingKey? = nil) throws(Error) -> Self {
-        try Self(opcode: .text, mask: mask, payload: [Byte](Array(text.utf8)))
+        try Self(opcode: .text, mask: mask, payload: text.utf8.map(Byte.init(bitPattern:)))
     }
 
     /// Creates a binary frame
@@ -244,8 +246,8 @@ extension RFC_6455.Frame {
         // CloseCode.rawValue UInt16 stays — assumed; serialize via
         // Byte-primary bytes(endianness:).
         payload.append(contentsOf: code.rawValue.bytes(endianness: .big))
-        // reason.utf8 is Sequence<UInt8>; bridge via [Byte] BSLI ctor.
-        payload.append(contentsOf: [Byte](Array(reason.utf8)))
+        // reason.utf8 is Sequence<UInt8>; bridge by bit pattern.
+        payload.append(contentsOf: reason.utf8.lazy.map(Byte.init(bitPattern:)))
         return try Self(opcode: .close, mask: mask, payload: payload)
     }
 }

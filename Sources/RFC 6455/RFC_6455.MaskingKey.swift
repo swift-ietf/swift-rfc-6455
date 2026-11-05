@@ -15,7 +15,7 @@
 //
 // RFC 6455 Section 5.3: Client-to-Server Masking
 
-import Radix_Formatter_Primitives
+import Formatter
 
 extension RFC_6455 {
     /// 32-bit Masking Key

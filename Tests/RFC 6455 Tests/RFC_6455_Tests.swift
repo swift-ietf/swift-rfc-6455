@@ -142,15 +142,15 @@ struct RFC6455Tests {
 
             #expect(frame.fin == true)
             #expect(frame.opcode == .text)
-            #expect(frame.payload == Array("Hello".utf8))
+            #expect(frame.payload == [Byte](utf8: "Hello"))
         }
 
         @Test
         func `Create binary frame`() throws {
-            let frame = try RFC_6455.Frame.binary([1, 2, 3, 4])
+            let frame = try RFC_6455.Frame.binary([Byte(1), Byte(2), Byte(3), Byte(4)])
 
             #expect(frame.opcode == .binary)
-            #expect(frame.payload == [1, 2, 3, 4])
+            #expect(frame.payload == [Byte(1), Byte(2), Byte(3), Byte(4)])
         }
 
         @Test
@@ -168,8 +168,8 @@ struct RFC6455Tests {
             #expect(frame.opcode == .close)
             // Payload: 2 bytes code + "bye"
             #expect(frame.payload.count == 5)
-            #expect(frame.payload[0] == 0x03)  // 1000 >> 8
-            #expect(frame.payload[1] == 0xE8)  // 1000 & 0xFF
+            #expect(frame.payload[0] == Byte(0x03))  // 1000 >> 8
+            #expect(frame.payload[1] == Byte(0xE8))  // 1000 & 0xFF
         }
 
         @Test
@@ -185,7 +185,7 @@ struct RFC6455Tests {
 
         @Test
         func `Control frame payload limit`() {
-            let largePayload: [Byte] = Array(repeating: 0, count: 126)
+            let largePayload: [Byte] = Array(repeating: Byte(0), count: 126)
 
             #expect(throws: RFC_6455.Frame.Error.self) {
                 try RFC_6455.Frame(opcode: .ping, payload: largePayload)
@@ -201,10 +201,10 @@ struct RFC6455Tests {
 
             // FIN + text opcode, no mask + length 2, "Hi"
             #expect(buffer.count == 4)
-            #expect(buffer[0] == 0x81)  // FIN + text
-            #expect(buffer[1] == 0x02)  // no mask + length 2
-            #expect(buffer[2] == 0x48)  // 'H'
-            #expect(buffer[3] == 0x69)  // 'i'
+            #expect(buffer[0] == Byte(0x81))  // FIN + text
+            #expect(buffer[1] == Byte(0x02))  // no mask + length 2
+            #expect(buffer[2] == Byte(0x48))  // 'H'
+            #expect(buffer[3] == Byte(0x69))  // 'i'
         }
 
         @Test
@@ -217,13 +217,13 @@ struct RFC6455Tests {
 
             // FIN + text, mask + length, 4 mask bytes, 2 masked bytes
             #expect(buffer.count == 8)
-            #expect(buffer[0] == 0x81)  // FIN + text
-            #expect(buffer[1] == 0x82)  // mask bit + length 2
+            #expect(buffer[0] == Byte(0x81))  // FIN + text
+            #expect(buffer[1] == Byte(0x82))  // mask bit + length 2
             // Mask bytes
-            #expect(buffer[2] == 0x37)
-            #expect(buffer[3] == 0xfa)
-            #expect(buffer[4] == 0x21)
-            #expect(buffer[5] == 0x3d)
+            #expect(buffer[2] == Byte(0x37))
+            #expect(buffer[3] == Byte(0xfa))
+            #expect(buffer[4] == Byte(0x21))
+            #expect(buffer[5] == Byte(0x3d))
         }
 
         @Test

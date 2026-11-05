@@ -15,9 +15,9 @@
 // Stdlib-interop UInt8 forwarders for WebSocket frame construction. Primary
 // byte-domain API lives in `RFC 6455`; these forwarders bridge stdlib callers
 // carrying `[UInt8]` payloads (e.g. from network buffers, file-read frames)
-// via `[Byte](data)`. Per [API-BYTE-007] (byte-discipline skill).
+// by bit pattern. Per [API-BYTE-007] (byte-discipline skill).
 
-internal import Byte_Primitives
+internal import Byte
 public import RFC_6455
 
 extension RFC_6455.Frame {
@@ -39,13 +39,13 @@ extension RFC_6455.Frame {
             rsv3: rsv3,
             opcode: opcode,
             mask: mask,
-            payload: [Byte](payload)
+            payload: payload.map(Byte.init(bitPattern:))
         )
     }
 
     /// Stdlib-interop forwarder: binary frame from `[UInt8]` data.
     @_disfavoredOverload
     public static func binary(_ data: [UInt8], mask: RFC_6455.MaskingKey? = nil) throws(RFC_6455.Frame.Error) -> Self {
-        try Self(opcode: .binary, mask: mask, payload: [Byte](data))
+        try Self(opcode: .binary, mask: mask, payload: data.map(Byte.init(bitPattern:)))
     }
 }
