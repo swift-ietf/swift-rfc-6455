@@ -45,14 +45,14 @@ let package = Package(
         .testTarget(
             name: "RFC 6455 Tests",
             dependencies: [
-                "RFC 6455"
+                .target(name: "RFC 6455")
             ]
         ),
         .testTarget(
             name: "RFC 6455 Standard Library Integration Tests",
             dependencies: [
-                "RFC 6455",
-                "RFC 6455 Standard Library Integration",
+                .target(name: "RFC 6455"),
+                .target(name: "RFC 6455 Standard Library Integration"),
             ]
         ),
     ],
