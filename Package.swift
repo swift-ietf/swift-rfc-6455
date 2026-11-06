@@ -6,16 +6,6 @@ extension String {
     static let rfc6455: Self = "RFC 6455"
 }
 
-extension Target.Dependency {
-    static var rfc6455: Self { .target(name: .rfc6455) }
-    static var rfc3986: Self { .product(name: "RFC 3986", package: "swift-rfc-3986") }
-    static var standards: Self { .product(name: "Standard Library Extensions", package: "swift-standard-library-extensions") }
-    static var incits41986: Self { .product(name: "ASCII", package: "swift-ascii") }
-    static var binary: Self { .product(name: "Binary", package: "swift-binary") }
-    static var bytePrimitivesSLI: Self { .product(name: "Byte", package: "swift-byte") }
-    static var radixFormat: Self { .product(name: "Formatter", package: "swift-formatter") }
-}
-
 let package = Package(
     name: "swift-rfc-6455",
     platforms: [
@@ -23,7 +13,7 @@ let package = Package(
         .iOS(.v27),
         .tvOS(.v27),
         .watchOS(.v27),
-        .visionOS(.v27)
+        .visionOS(.v27),
     ],
     products: [
         .library(name: "RFC 6455", targets: ["RFC 6455"]),
@@ -35,31 +25,31 @@ let package = Package(
         .package(url: "https://github.com/swift-atoms/swift-ascii.git", branch: "main"),
         .package(url: "https://github.com/swift-atoms/swift-binary.git", branch: "main", traits: ["Serializer"]),
         .package(url: "https://github.com/swift-atoms/swift-byte.git", branch: "main"),
-        .package(url: "https://github.com/swift-atoms/swift-formatter.git", branch: "main", traits: ["Radix"])
+        .package(url: "https://github.com/swift-atoms/swift-formatter.git", branch: "main", traits: ["Radix"]),
     ],
     targets: [
         .target(
             name: "RFC 6455",
             dependencies: [
-                .rfc3986,
-                .standards,
-                .incits41986,
-                .radixFormat,
-                .binary,
-                .bytePrimitivesSLI
+                .product(name: "RFC 3986", package: "swift-rfc-3986"),
+                .product(name: "Standard Library Extensions", package: "swift-standard-library-extensions"),
+                .product(name: "ASCII", package: "swift-ascii"),
+                .product(name: "Formatter", package: "swift-formatter"),
+                .product(name: "Binary", package: "swift-binary"),
+                .product(name: "Byte", package: "swift-byte"),
             ]
         ),
         .target(
             name: "RFC 6455 Standard Library Integration",
             dependencies: [
-                .rfc6455,
-                .bytePrimitivesSLI,
+                .target(name: .rfc6455),
+                .product(name: "Byte", package: "swift-byte"),
             ]
         ),
         .testTarget(
             name: "RFC 6455 Tests",
             dependencies: [
-                "RFC 6455",
+                "RFC 6455"
             ]
         ),
         .testTarget(
