@@ -25,51 +25,53 @@ extension RFC_6455 {
         init(__unchecked: Void, rawValue: UInt8) {
             self.rawValue = rawValue
         }
+    }
+}
 
-        /// Continuation frame (0x0)
-        ///
-        /// Continues a fragmented message.
-        public static let continuation = Self(__unchecked: (), rawValue: 0x0)
+extension RFC_6455.Opcode {
+    /// Continuation frame (0x0)
+    ///
+    /// Continues a fragmented message.
+    public static let continuation = Self(__unchecked: (), rawValue: 0x0)
 
-        /// Text frame (0x1)
-        ///
-        /// Payload is UTF-8 encoded text.
-        public static let text = Self(__unchecked: (), rawValue: 0x1)
+    /// Text frame (0x1)
+    ///
+    /// Payload is UTF-8 encoded text.
+    public static let text = Self(__unchecked: (), rawValue: 0x1)
 
-        /// Binary frame (0x2)
-        ///
-        /// Payload is arbitrary binary data.
-        public static let binary = Self(__unchecked: (), rawValue: 0x2)
+    /// Binary frame (0x2)
+    ///
+    /// Payload is arbitrary binary data.
+    public static let binary = Self(__unchecked: (), rawValue: 0x2)
 
-        /// Connection close (0x8)
-        public static let close = Self(__unchecked: (), rawValue: 0x8)
+    /// Connection close (0x8)
+    public static let close = Self(__unchecked: (), rawValue: 0x8)
 
-        /// Ping (0x9)
-        public static let ping = Self(__unchecked: (), rawValue: 0x9)
+    /// Ping (0x9)
+    public static let ping = Self(__unchecked: (), rawValue: 0x9)
 
-        /// Pong (0xA)
-        public static let pong = Self(__unchecked: (), rawValue: 0xA)
+    /// Pong (0xA)
+    public static let pong = Self(__unchecked: (), rawValue: 0xA)
 
-        /// Whether this is a control frame
-        ///
-        /// Control frames have opcodes 0x8 and higher.
-        public var isControl: Bool {
-            rawValue >= 0x8
-        }
+    /// Whether this is a control frame
+    ///
+    /// Control frames have opcodes 0x8 and higher.
+    public var isControl: Bool {
+        rawValue >= 0x8
+    }
 
-        /// Whether this is a data frame
-        public var isData: Bool {
-            rawValue < 0x8
-        }
+    /// Whether this is a data frame
+    public var isData: Bool {
+        rawValue < 0x8
+    }
 
-        /// Whether this opcode is reserved
-        public var isReserved: Bool {
-            switch rawValue {
-            case 0x3...0x7, 0xB...0xF:
-                return true
-            default:
-                return false
-            }
+    /// Whether this opcode is reserved
+    public var isReserved: Bool {
+        switch rawValue {
+        case 0x3...0x7, 0xB...0xF:
+            return true
+        default:
+            return false
         }
     }
 }

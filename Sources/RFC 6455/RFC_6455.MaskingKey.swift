@@ -41,44 +41,46 @@ extension RFC_6455 {
                 UInt8(value & 0xFF)
             )
         }
+    }
+}
 
-        /// Returns the key byte at the given index (0-3)
-        public subscript(index: Int) -> UInt8 {
-            switch index % 4 {
-            case 0: return bytes.0
-            case 1: return bytes.1
-            case 2: return bytes.2
-            case 3: return bytes.3
-            default: fatalError("Invalid index")
-            }
+extension RFC_6455.MaskingKey {
+    /// Returns the key byte at the given index (0-3)
+    public subscript(index: Int) -> UInt8 {
+        switch index % 4 {
+        case 0: return bytes.0
+        case 1: return bytes.1
+        case 2: return bytes.2
+        case 3: return bytes.3
+        default: fatalError("Invalid index")
         }
+    }
 
-        /// Applies the mask to data in-place
-        ///
-        /// XORs each byte with the corresponding mask byte.
-        /// This operation is its own inverse.
-        ///
-        /// - Parameter data: The data to mask/unmask
-        public func apply(to data: inout [UInt8]) {
-            for i in data.indices {
-                data[i] ^= self[i]
-            }
+    /// Applies the mask to data in-place
+    ///
+    /// XORs each byte with the corresponding mask byte.
+    /// This operation is its own inverse.
+    ///
+    /// - Parameter data: The data to mask/unmask
+    public func apply(to data: inout [UInt8]) {
+        for i in data.indices {
+            data[i] ^= self[i]
         }
+    }
 
-        /// Returns masked data
-        ///
-        /// - Parameter data: The data to mask
-        /// - Returns: The masked data
-        public func applying(to data: [UInt8]) -> [UInt8] {
-            var result = data
-            apply(to: &result)
-            return result
-        }
+    /// Returns masked data
+    ///
+    /// - Parameter data: The data to mask
+    /// - Returns: The masked data
+    public func applying(to data: [UInt8]) -> [UInt8] {
+        var result = data
+        apply(to: &result)
+        return result
+    }
 
-        /// Converts to array of bytes
-        public var array: [UInt8] {
-            [bytes.0, bytes.1, bytes.2, bytes.3]
-        }
+    /// Converts to array of bytes
+    public var array: [UInt8] {
+        [bytes.0, bytes.1, bytes.2, bytes.3]
     }
 }
 
