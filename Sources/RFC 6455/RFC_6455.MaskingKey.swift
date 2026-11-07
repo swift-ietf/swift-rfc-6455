@@ -1,20 +1,3 @@
-// ===----------------------------------------------------------------------===//
-//
-// Copyright (c) 2025 Coen ten Thije Boonkkamp
-// Licensed under Apache License v2.0
-//
-// See LICENSE.txt for license information
-// See CONTRIBUTORS.txt for the list of project contributors
-//
-// SPDX-License-Identifier: Apache-2.0
-//
-// ===----------------------------------------------------------------------===//
-
-// RFC_6455.MaskingKey.swift
-// swift-rfc-6455
-//
-// RFC 6455 Section 5.3: Client-to-Server Masking
-
 import Formatter
 
 extension RFC_6455 {
@@ -99,15 +82,11 @@ extension RFC_6455 {
     }
 }
 
-// MARK: - Equatable
-
 extension RFC_6455.MaskingKey: Equatable {
     public static func == (lhs: Self, rhs: Self) -> Bool {
         lhs.bytes.0 == rhs.bytes.0 && lhs.bytes.1 == rhs.bytes.1 && lhs.bytes.2 == rhs.bytes.2 && lhs.bytes.3 == rhs.bytes.3
     }
 }
-
-// MARK: - Hashable
 
 extension RFC_6455.MaskingKey: Hashable {
     public func hash(into hasher: inout Hasher) {
@@ -117,8 +96,6 @@ extension RFC_6455.MaskingKey: Hashable {
         hasher.combine(bytes.3)
     }
 }
-
-// MARK: - Codable
 
 extension RFC_6455.MaskingKey: Codable {
     public init(from decoder: any Decoder) throws {
@@ -133,8 +110,6 @@ extension RFC_6455.MaskingKey: Codable {
         try container.encode(value)
     }
 }
-
-// MARK: - CustomStringConvertible
 
 extension RFC_6455.MaskingKey: CustomStringConvertible {
     public var description: String {

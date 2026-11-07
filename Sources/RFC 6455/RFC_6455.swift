@@ -1,23 +1,3 @@
-// ===----------------------------------------------------------------------===//
-//
-// Copyright (c) 2025 Coen ten Thije Boonkkamp
-// Licensed under Apache License v2.0
-//
-// See LICENSE.txt for license information
-// See CONTRIBUTORS.txt for the list of project contributors
-//
-// SPDX-License-Identifier: Apache-2.0
-//
-// ===----------------------------------------------------------------------===//
-
-// RFC_6455.swift
-// swift-rfc-6455
-//
-// RFC 6455: The WebSocket Protocol (December 2011)
-// https://www.rfc-editor.org/rfc/rfc6455.html
-//
-// This package implements the WebSocket protocol as defined by RFC 6455.
-
 /// RFC 6455: The WebSocket Protocol
 ///
 /// This namespace contains types for the WebSocket protocol as defined

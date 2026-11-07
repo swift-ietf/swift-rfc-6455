@@ -1,20 +1,3 @@
-// ===----------------------------------------------------------------------===//
-//
-// Copyright (c) 2025 Coen ten Thije Boonkkamp
-// Licensed under Apache License v2.0
-//
-// See LICENSE.txt for license information
-// See CONTRIBUTORS.txt for the list of project contributors
-//
-// SPDX-License-Identifier: Apache-2.0
-//
-// ===----------------------------------------------------------------------===//
-
-// RFC_6455.Frame.swift
-// swift-rfc-6455
-//
-// RFC 6455 Section 5.2: Base Framing Protocol
-
 public import Binary
 public import Byte
 
@@ -85,12 +68,10 @@ extension RFC_6455 {
             mask: MaskingKey? = nil,
             payload: [Byte]
         ) throws(Error) {
-            // Control frames must have FIN set
             if opcode.isControl && !fin {
                 throw Error.controlFrameMustBeFinal
             }
 
-            // Control frames limited to 125 bytes
             if opcode.isControl && payload.count > Limits.maxControlPayload {
                 throw Error.controlPayloadTooLarge(payload.count)
             }
@@ -103,9 +84,6 @@ extension RFC_6455 {
             self.mask = mask
             self.payload = payload
         }
-
-        // Stdlib-interop UInt8 forwarder init lives in `RFC 6455 Standard
-        // Library Integration` per [API-BYTE-007].
 
         /// Creates a frame WITHOUT validation
         init(
@@ -129,16 +107,12 @@ extension RFC_6455 {
     }
 }
 
-// MARK: - Binary.Serializable
-
 extension RFC_6455.Frame: Binary.Serializable {
     /// Serializes the WebSocket frame to wire format
     public static func serialize<Buffer: RangeReplaceableCollection>(
         _ frame: Self,
         into buffer: inout Buffer
     ) where Buffer.Element == Byte {
-        // First byte: FIN + RSV + Opcode. Opcode.rawValue UInt8 stays
-        // (separate file scope); bridge via Byte() at conformance boundary.
         var byte0: UInt8 = frame.opcode.rawValue
         if frame.fin { byte0 |= 0x80 }
         if frame.rsv1 { byte0 |= 0x40 }
@@ -146,7 +120,6 @@ extension RFC_6455.Frame: Binary.Serializable {
         if frame.rsv3 { byte0 |= 0x10 }
         buffer.append(Byte(byte0))
 
-        // Second byte: MASK + Payload length
         let masked = frame.mask != nil
         var byte1: UInt8 = masked ? 0x80 : 0
 
@@ -157,25 +130,19 @@ extension RFC_6455.Frame: Binary.Serializable {
         } else if payloadLength <= 65535 {
             byte1 |= 126
             buffer.append(Byte(byte1))
-            // 16-bit length via Byte-primary bytes(endianness:)
             buffer.append(contentsOf: UInt16(payloadLength).bytes(endianness: .big))
         } else {
             byte1 |= 127
             buffer.append(Byte(byte1))
-            // 64-bit length via Byte-primary bytes(endianness:)
             buffer.append(contentsOf: UInt64(payloadLength).bytes(endianness: .big))
         }
 
-        // Masking key and payload. mask.bytes is (UInt8,UInt8,UInt8,UInt8)
-        // tuple in separate MaskingKey file scope; bridge via Byte().
         if let mask = frame.mask {
             buffer.append(Byte(mask.bytes.0))
             buffer.append(Byte(mask.bytes.1))
             buffer.append(Byte(mask.bytes.2))
             buffer.append(Byte(mask.bytes.3))
 
-            // Masked payload. mask.applying takes [UInt8] in separate
-            // MaskingKey file scope; bridge by bit pattern both ways.
             let maskedUInt8 = mask.applying(to: frame.payload.map(\.bitPattern))
             buffer.append(contentsOf: maskedUInt8.lazy.map(Byte.init(bitPattern:)))
         } else {
@@ -183,8 +150,6 @@ extension RFC_6455.Frame: Binary.Serializable {
         }
     }
 }
-
-// MARK: - Convenience Constructors
 
 extension RFC_6455.Frame {
     /// Creates a text frame
@@ -206,9 +171,6 @@ extension RFC_6455.Frame {
     public static func binary(_ data: [Byte], mask: RFC_6455.MaskingKey? = nil) throws(Error) -> Self {
         try Self(opcode: .binary, mask: mask, payload: data)
     }
-
-    // Stdlib-interop UInt8 forwarder `binary(_:mask:)` lives in `RFC 6455
-    // Standard Library Integration` per [API-BYTE-007].
 
     /// Creates a ping frame
     ///
@@ -243,10 +205,7 @@ extension RFC_6455.Frame {
         mask: RFC_6455.MaskingKey? = nil
     ) throws(Error) -> Self {
         var payload: [Byte] = []
-        // CloseCode.rawValue UInt16 stays — assumed; serialize via
-        // Byte-primary bytes(endianness:).
         payload.append(contentsOf: code.rawValue.bytes(endianness: .big))
-        // reason.utf8 is Sequence<UInt8>; bridge by bit pattern.
         payload.append(contentsOf: reason.utf8.lazy.map(Byte.init(bitPattern:)))
         return try Self(opcode: .close, mask: mask, payload: payload)
     }

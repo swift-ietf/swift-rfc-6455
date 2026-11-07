@@ -1,20 +1,3 @@
-// ===----------------------------------------------------------------------===//
-//
-// Copyright (c) 2025 Coen ten Thije Boonkkamp
-// Licensed under Apache License v2.0
-//
-// See LICENSE.txt for license information
-// See CONTRIBUTORS.txt for the list of project contributors
-//
-// SPDX-License-Identifier: Apache-2.0
-//
-// ===----------------------------------------------------------------------===//
-
-// RFC_6455.CloseCode.swift
-// swift-rfc-6455
-//
-// RFC 6455 Section 7.4: Status Codes
-
 extension RFC_6455 {
     /// WebSocket Close Status Code
     ///
@@ -52,8 +35,6 @@ extension RFC_6455 {
         init(__unchecked: Void, rawValue: UInt16) {
             self.rawValue = rawValue
         }
-
-        // MARK: - Protocol Codes
 
         /// Normal closure (1000)
         ///
@@ -115,8 +96,6 @@ extension RFC_6455 {
         ///
         /// Must not be sent in a close frame. Indicates TLS handshake failed.
         public static let tlsHandshakeFailed = Self(__unchecked: (), rawValue: 1015)
-
-        // MARK: - Validation
 
         /// Whether this code is valid for use in a close frame
         ///

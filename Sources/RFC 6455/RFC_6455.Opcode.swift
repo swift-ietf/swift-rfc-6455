@@ -1,20 +1,3 @@
-// ===----------------------------------------------------------------------===//
-//
-// Copyright (c) 2025 Coen ten Thije Boonkkamp
-// Licensed under Apache License v2.0
-//
-// See LICENSE.txt for license information
-// See CONTRIBUTORS.txt for the list of project contributors
-//
-// SPDX-License-Identifier: Apache-2.0
-//
-// ===----------------------------------------------------------------------===//
-
-// RFC_6455.Opcode.swift
-// swift-rfc-6455
-//
-// RFC 6455 Section 5.2: Base Framing Protocol - Opcode
-
 extension RFC_6455 {
     /// WebSocket Frame Opcode
     ///
@@ -35,7 +18,6 @@ extension RFC_6455 {
         public let rawValue: UInt8
 
         public init(rawValue: UInt8) {
-            // Opcodes are 4 bits
             self.rawValue = rawValue & 0x0F
         }
 
@@ -43,8 +25,6 @@ extension RFC_6455 {
         init(__unchecked: Void, rawValue: UInt8) {
             self.rawValue = rawValue
         }
-
-        // MARK: - Data Frames
 
         /// Continuation frame (0x0)
         ///
@@ -61,10 +41,6 @@ extension RFC_6455 {
         /// Payload is arbitrary binary data.
         public static let binary = Self(__unchecked: (), rawValue: 0x2)
 
-        // Values 0x3-0x7 are reserved for further non-control frames
-
-        // MARK: - Control Frames
-
         /// Connection close (0x8)
         public static let close = Self(__unchecked: (), rawValue: 0x8)
 
@@ -73,10 +49,6 @@ extension RFC_6455 {
 
         /// Pong (0xA)
         public static let pong = Self(__unchecked: (), rawValue: 0xA)
-
-        // Values 0xB-0xF are reserved for further control frames
-
-        // MARK: - Classification
 
         /// Whether this is a control frame
         ///
