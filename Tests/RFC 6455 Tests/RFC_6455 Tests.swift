@@ -14,9 +14,15 @@ import Testing
 
 @testable import RFC_6455
 
-@Suite
-struct `RFC 6455 WebSocket Tests` {
+enum `RFC_6455 Tests` {}
 
+extension `RFC_6455 Tests` {
+    @Suite
+    struct `RFC 6455 WebSocket Tests` {
+    }
+}
+
+extension `RFC_6455 Tests`.`RFC 6455 WebSocket Tests` {
     @Suite
     struct `Constants Tests` {
         @Test
