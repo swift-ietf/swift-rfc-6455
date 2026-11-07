@@ -14,11 +14,11 @@ import Testing
 
 @testable import RFC_6455
 
-@Suite("RFC 6455 WebSocket Tests")
-struct RFC6455Tests {
+@Suite
+struct `RFC 6455 WebSocket Tests` {
 
-    @Suite("Constants Tests")
-    struct ConstantsTests {
+    @Suite
+    struct `Constants Tests` {
         @Test
         func `Version is 13`() {
             #expect(RFC_6455.version == 13)
@@ -30,8 +30,8 @@ struct RFC6455Tests {
         }
     }
 
-    @Suite("Opcode Tests")
-    struct OpcodeTests {
+    @Suite
+    struct `Opcode Tests` {
         @Test
         func `Data frame opcodes`() {
             #expect(RFC_6455.Opcode.continuation.rawValue == 0x0)
@@ -62,8 +62,8 @@ struct RFC6455Tests {
         }
     }
 
-    @Suite("Close Code Tests")
-    struct CloseCodeTests {
+    @Suite
+    struct `Close Code Tests` {
         @Test
         func `Standard close codes`() {
             #expect(RFC_6455.CloseCode.normalClosure.rawValue == 1000)
@@ -88,8 +88,8 @@ struct RFC6455Tests {
         }
     }
 
-    @Suite("Masking Key Tests")
-    struct MaskingKeyTests {
+    @Suite
+    struct `Masking Key Tests` {
         @Test
         func `Create from bytes`() {
             let key = RFC_6455.MaskingKey(0x12, 0x34, 0x56, 0x78)
@@ -134,8 +134,8 @@ struct RFC6455Tests {
         }
     }
 
-    @Suite("Frame Tests")
-    struct FrameTests {
+    @Suite
+    struct `Frame Tests` {
         @Test
         func `Create text frame`() throws {
             let frame = try RFC_6455.Frame.text("Hello")
