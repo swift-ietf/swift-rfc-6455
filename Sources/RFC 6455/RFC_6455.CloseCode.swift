@@ -1,3 +1,6 @@
+import Binary
+import Byte
+
 extension RFC_6455 {
     /// WebSocket Close Status Code
     ///
@@ -154,5 +157,16 @@ extension RFC_6455.CloseCode: CustomStringConvertible {
         case 1015: return "TLS handshake failed"
         default: return "close code \(rawValue)"
         }
+    }
+}
+
+extension RFC_6455.CloseCode {
+    /// Appends the code as the big-endian `uint16` a Close frame's payload
+    /// begins with (RFC 6455 Section 5.5.1).
+    static func serialize<Buffer: RangeReplaceableCollection>(
+        _ code: Self,
+        into buffer: inout Buffer
+    ) where Buffer.Element == Byte {
+        buffer.append(contentsOf: code.rawValue.bytes(endianness: .big))
     }
 }

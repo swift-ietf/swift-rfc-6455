@@ -213,7 +213,7 @@ extension RFC_6455.Frame {
             throw Error.invalidCloseCode(code.rawValue)
         }
         var payload: [Byte] = []
-        payload.append(contentsOf: code.rawValue.bytes(endianness: .big))
+        RFC_6455.CloseCode.serialize(code, into: &payload)
         payload.append(contentsOf: reason.utf8.lazy.map(Byte.init(bitPattern:)))
         return try Self(opcode: .close, mask: mask, payload: payload)
     }
