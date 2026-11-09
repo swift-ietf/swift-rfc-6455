@@ -102,12 +102,15 @@ extension RFC_6455.CloseCode {
 
     /// Whether this code is valid for use in a close frame
     ///
-    /// Reserved codes (1005, 1006, 1015) must not be sent.
+    /// Reserved codes (1005, 1006, 1015) must not be sent, codes below 1000
+    /// are not used, and codes of 5000 and above are not assigned by RFC 6455.
     public var isValid: Bool {
         switch rawValue {
         case 1005, 1006, 1015:
             return false
         case 0..<1000:
+            return false
+        case 5000...:
             return false
         default:
             return true

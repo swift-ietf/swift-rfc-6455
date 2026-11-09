@@ -87,6 +87,14 @@ extension `RFC_6455 Tests`.`RFC 6455 WebSocket Tests` {
         }
 
         @Test
+        func `Codes outside 1000 to 4999 are invalid`() {
+            #expect(RFC_6455.CloseCode(rawValue: 999).isValid == false)
+            #expect(RFC_6455.CloseCode(rawValue: 4999).isValid == true)
+            #expect(RFC_6455.CloseCode(rawValue: 5000).isValid == false)
+            #expect(RFC_6455.CloseCode(rawValue: UInt16.max).isValid == false)
+        }
+
+        @Test
         func `Code range classification`() {
             #expect(RFC_6455.CloseCode.normalClosure.isProtocolDefined == true)
             #expect(RFC_6455.CloseCode(rawValue: 3000).isLibraryCode == true)
