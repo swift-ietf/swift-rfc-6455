@@ -203,11 +203,15 @@ extension RFC_6455.Frame {
     ///   - reason: Optional close reason (UTF-8)
     ///   - mask: Optional masking key
     /// - Returns: A close frame
+    /// - Throws: `Error.invalidCloseCode` if `code.isValid` is false
     public static func close(
         code: RFC_6455.CloseCode = .normalClosure,
         reason: String = "",
         mask: RFC_6455.MaskingKey? = nil
     ) throws(Error) -> Self {
+        guard code.isValid else {
+            throw Error.invalidCloseCode(code.rawValue)
+        }
         var payload: [Byte] = []
         payload.append(contentsOf: code.rawValue.bytes(endianness: .big))
         payload.append(contentsOf: reason.utf8.lazy.map(Byte.init(bitPattern:)))

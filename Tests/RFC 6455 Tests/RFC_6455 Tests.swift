@@ -187,6 +187,15 @@ extension `RFC_6455 Tests`.`RFC 6455 WebSocket Tests` {
         }
 
         @Test
+        func `Close frame rejects codes that must not be sent`() {
+            for code: UInt16 in [999, 1005, 1006, 1015, 5000] {
+                #expect(throws: RFC_6455.Frame.Error.invalidCloseCode(code)) {
+                    try RFC_6455.Frame.close(code: RFC_6455.CloseCode(rawValue: code))
+                }
+            }
+        }
+
+        @Test
         func `Control frames must be final`() {
             #expect(throws: RFC_6455.Frame.Error.self) {
                 try RFC_6455.Frame(

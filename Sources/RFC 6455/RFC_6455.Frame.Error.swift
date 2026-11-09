@@ -15,6 +15,9 @@ extension RFC_6455.Frame {
 
         /// Invalid payload length encoding
         case invalidPayloadLength
+
+        /// Close code that must not be sent in a close frame
+        case invalidCloseCode(_ code: UInt16)
     }
 }
 
@@ -31,6 +34,8 @@ extension RFC_6455.Frame.Error: CustomStringConvertible {
             return "Reserved opcode: 0x\(String(opcode, radix: 16))"
         case .invalidPayloadLength:
             return "Invalid payload length encoding"
+        case .invalidCloseCode(let code):
+            return "Close code \(code) must not be sent in a close frame"
         }
     }
 }
