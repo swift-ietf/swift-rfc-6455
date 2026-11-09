@@ -190,6 +190,15 @@ extension `RFC_6455 Tests`.`RFC 6455 WebSocket Tests` {
         }
 
         @Test
+        func `Reserved opcodes are rejected`() {
+            for rawValue: UInt8 in [0x3, 0x7, 0xB, 0xF] {
+                #expect(throws: RFC_6455.Frame.Error.reservedOpcode(rawValue)) {
+                    try RFC_6455.Frame(opcode: RFC_6455.Opcode(rawValue: rawValue), payload: [])
+                }
+            }
+        }
+
+        @Test
         func `Control frame payload limit`() {
             let largePayload: [Byte] = Array(repeating: Byte(0), count: 126)
 

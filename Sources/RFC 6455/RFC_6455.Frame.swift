@@ -68,6 +68,10 @@ extension RFC_6455 {
             mask: MaskingKey? = nil,
             payload: [Byte]
         ) throws(Error) {
+            if opcode.isReserved {
+                throw Error.reservedOpcode(opcode.rawValue)
+            }
+
             if opcode.isControl && !fin {
                 throw Error.controlFrameMustBeFinal
             }
