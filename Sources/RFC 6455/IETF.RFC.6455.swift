@@ -1,3 +1,4 @@
+public import IETF_RFC
 /// RFC 6455: The WebSocket Protocol
 ///
 /// This namespace contains types for the WebSocket protocol as defined
@@ -50,9 +51,11 @@
 ///
 /// - [RFC 6455](https://www.rfc-editor.org/rfc/rfc6455)
 /// - ``RFC_3986`` for WebSocket URIs
-public enum RFC_6455 {}
+extension IETF.RFC {
+    public enum `6455` {}
+}
 
-extension RFC_6455 {
+extension IETF.RFC.`6455` {
     /// WebSocket protocol version
     ///
     /// The Sec-WebSocket-Version header value.

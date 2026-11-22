@@ -1,7 +1,7 @@
 import Binary
 import Byte
 
-extension RFC_6455 {
+extension IETF.RFC.`6455` {
     /// WebSocket Close Status Code
     ///
     /// Status codes indicate the reason for closing the connection.
@@ -41,7 +41,7 @@ extension RFC_6455 {
     }
 }
 
-extension RFC_6455.CloseCode {
+extension IETF.RFC.`6455`.CloseCode {
     /// Normal closure (1000)
     ///
     /// The connection successfully completed its purpose.
@@ -140,7 +140,7 @@ extension RFC_6455.CloseCode {
     }
 }
 
-extension RFC_6455.CloseCode: CustomStringConvertible {
+extension IETF.RFC.`6455`.CloseCode: CustomStringConvertible {
     public var description: String {
         switch rawValue {
         case 1000: return "normal closure"
@@ -160,7 +160,7 @@ extension RFC_6455.CloseCode: CustomStringConvertible {
     }
 }
 
-extension RFC_6455.CloseCode {
+extension IETF.RFC.`6455`.CloseCode {
     /// Appends the code as the big-endian `uint16` a Close frame's payload
     /// begins with (RFC 6455 Section 5.5.1).
     static func serialize<Buffer: RangeReplaceableCollection>(

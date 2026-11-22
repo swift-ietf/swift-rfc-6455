@@ -1,10 +1,10 @@
-extension RFC_6455.Frame {
+extension IETF.RFC.`6455`.Frame {
     /// Frame size limits
     public enum Limits {
     }
 }
 
-extension RFC_6455.Frame.Limits {
+extension IETF.RFC.`6455`.Frame.Limits {
     /// Maximum control frame payload (125 bytes)
     public static let maxControlPayload = 125
 

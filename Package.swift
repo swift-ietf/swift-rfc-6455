@@ -16,6 +16,7 @@ let package = Package(
         .library(name: "RFC 6455 Standard Library Integration", targets: ["RFC 6455 Standard Library Integration"]),
     ],
     dependencies: [
+        .package(url: "https://github.com/swift-ietf/swift-rfc.git", branch: "main"),
         .package(url: "https://github.com/swift-ietf/swift-rfc-3986.git", branch: "main"),
         .package(url: "https://github.com/swift-atoms/swift-standard-library-extensions.git", branch: "main"),
         .package(url: "https://github.com/swift-atoms/swift-ascii.git", branch: "main"),
@@ -27,6 +28,7 @@ let package = Package(
         .target(
             name: "RFC 6455",
             dependencies: [
+                .product(name: "IETF RFC", package: "swift-rfc"),
                 .product(name: "RFC 3986", package: "swift-rfc-3986"),
                 .product(name: "Standard Library Extensions", package: "swift-standard-library-extensions"),
                 .product(name: "ASCII", package: "swift-ascii"),

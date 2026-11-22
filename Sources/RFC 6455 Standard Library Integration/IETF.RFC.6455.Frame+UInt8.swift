@@ -1,7 +1,7 @@
 internal import Byte
 public import RFC_6455
 
-extension RFC_6455.Frame {
+extension IETF.RFC.`6455`.Frame {
     /// Stdlib-interop forwarder: construction from `[UInt8]` payload.
     @_disfavoredOverload
     public init(
@@ -9,10 +9,10 @@ extension RFC_6455.Frame {
         rsv1: Bool = false,
         rsv2: Bool = false,
         rsv3: Bool = false,
-        opcode: RFC_6455.Opcode,
-        mask: RFC_6455.MaskingKey? = nil,
+        opcode: IETF.RFC.`6455`.Opcode,
+        mask: IETF.RFC.`6455`.MaskingKey? = nil,
         payload: [UInt8]
-    ) throws(RFC_6455.Frame.Error) {
+    ) throws(IETF.RFC.`6455`.Frame.Error) {
         try self.init(
             fin: fin,
             rsv1: rsv1,
@@ -26,7 +26,7 @@ extension RFC_6455.Frame {
 
     /// Stdlib-interop forwarder: binary frame from `[UInt8]` data.
     @_disfavoredOverload
-    public static func binary(_ data: [UInt8], mask: RFC_6455.MaskingKey? = nil) throws(RFC_6455.Frame.Error) -> Self {
+    public static func binary(_ data: [UInt8], mask: IETF.RFC.`6455`.MaskingKey? = nil) throws(IETF.RFC.`6455`.Frame.Error) -> Self {
         try Self(opcode: .binary, mask: mask, payload: data.map(Byte.init(bitPattern:)))
     }
 }

@@ -1,7 +1,7 @@
 public import Binary
 public import Byte
 
-extension RFC_6455 {
+extension IETF.RFC.`6455` {
     /// WebSocket Frame
     ///
     /// Represents a single WebSocket data frame.
@@ -111,7 +111,7 @@ extension RFC_6455 {
     }
 }
 
-extension RFC_6455.Frame: Binary.Serializable {
+extension IETF.RFC.`6455`.Frame: Binary.Serializable {
     /// Serializes the WebSocket frame to wire format
     public static func serialize<Buffer: RangeReplaceableCollection>(
         _ frame: Self,
@@ -155,14 +155,14 @@ extension RFC_6455.Frame: Binary.Serializable {
     }
 }
 
-extension RFC_6455.Frame {
+extension IETF.RFC.`6455`.Frame {
     /// Creates a text frame
     ///
     /// - Parameters:
     ///   - text: The text message (UTF-8)
     ///   - mask: Optional masking key
     /// - Returns: A text frame
-    public static func text(_ text: String, mask: RFC_6455.MaskingKey? = nil) throws(Error) -> Self {
+    public static func text(_ text: String, mask: IETF.RFC.`6455`.MaskingKey? = nil) throws(Error) -> Self {
         try Self(opcode: .text, mask: mask, payload: text.utf8.map(Byte.init(bitPattern:)))
     }
 
@@ -172,7 +172,7 @@ extension RFC_6455.Frame {
     ///   - data: The binary data
     ///   - mask: Optional masking key
     /// - Returns: A binary frame
-    public static func binary(_ data: [Byte], mask: RFC_6455.MaskingKey? = nil) throws(Error) -> Self {
+    public static func binary(_ data: [Byte], mask: IETF.RFC.`6455`.MaskingKey? = nil) throws(Error) -> Self {
         try Self(opcode: .binary, mask: mask, payload: data)
     }
 
@@ -182,7 +182,7 @@ extension RFC_6455.Frame {
     ///   - data: Optional ping payload (max 125 bytes)
     ///   - mask: Optional masking key
     /// - Returns: A ping frame
-    public static func ping(_ data: [Byte] = [], mask: RFC_6455.MaskingKey? = nil) throws(Error) -> Self {
+    public static func ping(_ data: [Byte] = [], mask: IETF.RFC.`6455`.MaskingKey? = nil) throws(Error) -> Self {
         try Self(opcode: .ping, mask: mask, payload: data)
     }
 
@@ -192,7 +192,7 @@ extension RFC_6455.Frame {
     ///   - data: Pong payload (should match ping)
     ///   - mask: Optional masking key
     /// - Returns: A pong frame
-    public static func pong(_ data: [Byte] = [], mask: RFC_6455.MaskingKey? = nil) throws(Error) -> Self {
+    public static func pong(_ data: [Byte] = [], mask: IETF.RFC.`6455`.MaskingKey? = nil) throws(Error) -> Self {
         try Self(opcode: .pong, mask: mask, payload: data)
     }
 
@@ -205,15 +205,15 @@ extension RFC_6455.Frame {
     /// - Returns: A close frame
     /// - Throws: `Error.invalidCloseCode` if `code.isValid` is false
     public static func close(
-        code: RFC_6455.CloseCode = .normalClosure,
+        code: IETF.RFC.`6455`.CloseCode = .normalClosure,
         reason: String = "",
-        mask: RFC_6455.MaskingKey? = nil
+        mask: IETF.RFC.`6455`.MaskingKey? = nil
     ) throws(Error) -> Self {
         guard code.isValid else {
             throw Error.invalidCloseCode(code.rawValue)
         }
         var payload: [Byte] = []
-        RFC_6455.CloseCode.serialize(code, into: &payload)
+        IETF.RFC.`6455`.CloseCode.serialize(code, into: &payload)
         payload.append(contentsOf: reason.utf8.lazy.map(Byte.init(bitPattern:)))
         return try Self(opcode: .close, mask: mask, payload: payload)
     }

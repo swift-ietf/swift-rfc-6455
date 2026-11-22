@@ -1,4 +1,4 @@
-extension RFC_6455.Frame {
+extension IETF.RFC.`6455`.Frame {
     /// Errors that can occur when working with WebSocket frames
     public enum Error: Swift.Error, Sendable, Equatable {
         /// Control frame must have FIN bit set
@@ -21,7 +21,7 @@ extension RFC_6455.Frame {
     }
 }
 
-extension RFC_6455.Frame.Error: CustomStringConvertible {
+extension IETF.RFC.`6455`.Frame.Error: CustomStringConvertible {
     public var description: String {
         switch self {
         case .controlFrameMustBeFinal:

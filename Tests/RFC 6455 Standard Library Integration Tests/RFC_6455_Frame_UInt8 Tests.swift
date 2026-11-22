@@ -22,7 +22,7 @@ extension `RFC_6455_Frame_UInt8 Tests` {
         @Test
         func `init forwarder accepts [UInt8] payload`() throws {
             let uint8Payload: [UInt8] = [0x48, 0x65, 0x6C, 0x6C, 0x6F]  // "Hello"
-            let frame = try RFC_6455.Frame(opcode: .binary, payload: uint8Payload)
+            let frame = try IETF.RFC.`6455`.Frame(opcode: .binary, payload: uint8Payload)
             #expect(frame.opcode == .binary)
             #expect(frame.payload.count == 5)
         }
@@ -30,7 +30,7 @@ extension `RFC_6455_Frame_UInt8 Tests` {
         @Test
         func `binary forwarder accepts [UInt8] data`() throws {
             let uint8Data: [UInt8] = [0x01, 0x02, 0x03, 0x04]
-            let frame = try RFC_6455.Frame.binary(uint8Data)
+            let frame = try IETF.RFC.`6455`.Frame.binary(uint8Data)
             #expect(frame.opcode == .binary)
             #expect(frame.payload.count == 4)
         }

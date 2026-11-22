@@ -1,6 +1,6 @@
 import Formatter
 
-extension RFC_6455 {
+extension IETF.RFC.`6455` {
     /// 32-bit Masking Key
     ///
     /// Used to mask frame payloads from client to server.
@@ -44,7 +44,7 @@ extension RFC_6455 {
     }
 }
 
-extension RFC_6455.MaskingKey {
+extension IETF.RFC.`6455`.MaskingKey {
     /// Returns the key byte at the given index (0-3)
     public subscript(index: Int) -> UInt8 {
         switch index % 4 {
@@ -84,13 +84,13 @@ extension RFC_6455.MaskingKey {
     }
 }
 
-extension RFC_6455.MaskingKey: Equatable {
+extension IETF.RFC.`6455`.MaskingKey: Equatable {
     public static func == (lhs: Self, rhs: Self) -> Bool {
         lhs.bytes.0 == rhs.bytes.0 && lhs.bytes.1 == rhs.bytes.1 && lhs.bytes.2 == rhs.bytes.2 && lhs.bytes.3 == rhs.bytes.3
     }
 }
 
-extension RFC_6455.MaskingKey: Hashable {
+extension IETF.RFC.`6455`.MaskingKey: Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(bytes.0)
         hasher.combine(bytes.1)
@@ -99,7 +99,7 @@ extension RFC_6455.MaskingKey: Hashable {
     }
 }
 
-extension RFC_6455.MaskingKey: Codable {
+extension IETF.RFC.`6455`.MaskingKey: Codable {
     public init(from decoder: any Decoder) throws {
         let container = try decoder.singleValueContainer()
         let value = try container.decode(UInt32.self)
@@ -113,7 +113,7 @@ extension RFC_6455.MaskingKey: Codable {
     }
 }
 
-extension RFC_6455.MaskingKey: CustomStringConvertible {
+extension IETF.RFC.`6455`.MaskingKey: CustomStringConvertible {
     public var description: String {
         bytes.0.formatted(Radix.Formatter.hex.zeroPadded(width: 2)) + bytes.1.formatted(Radix.Formatter.hex.zeroPadded(width: 2)) + bytes.2.formatted(Radix.Formatter.hex.zeroPadded(width: 2))
             + bytes.3.formatted(Radix.Formatter.hex.zeroPadded(width: 2))

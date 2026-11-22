@@ -1,4 +1,4 @@
-extension RFC_6455 {
+extension IETF.RFC.`6455` {
     /// WebSocket Frame Opcode
     ///
     /// Defines the interpretation of the payload data.
@@ -28,7 +28,7 @@ extension RFC_6455 {
     }
 }
 
-extension RFC_6455.Opcode {
+extension IETF.RFC.`6455`.Opcode {
     /// Continuation frame (0x0)
     ///
     /// Continues a fragmented message.
@@ -76,7 +76,7 @@ extension RFC_6455.Opcode {
     }
 }
 
-extension RFC_6455.Opcode: CustomStringConvertible {
+extension IETF.RFC.`6455`.Opcode: CustomStringConvertible {
     public var description: String {
         switch rawValue {
         case 0x0: return "continuation"
