@@ -1,4 +1,5 @@
 public import IETF_RFC
+
 /// RFC 6455: The WebSocket Protocol
 ///
 /// This namespace contains types for the WebSocket protocol as defined
